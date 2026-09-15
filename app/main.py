@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import time
 from contextlib import asynccontextmanager
 from pathlib import Path
 
@@ -20,6 +21,36 @@ from app.data.database import Database
 
 log = logger.bind(component="luxtime.api", version=__version__)
 
+_PING_RETRY_DELAYS_SECONDS = (1, 2, 4, 8, 15)
+
+
+def _ping_with_retry(database: Database) -> bool:
+    """Retry the startup connectivity check with backoff.
+
+    Postgres can still be finishing its own startup/recovery when this
+    container starts (e.g. right after a host restart), which briefly
+    rejects connections rather than refusing them outright. A single failed
+    attempt here shouldn't be treated as "database unavailable" for the
+    life of the process.
+    """
+    last_error: Exception | None = None
+    for attempt, delay in enumerate((0, *_PING_RETRY_DELAYS_SECONDS), start=1):
+        if delay:
+            time.sleep(delay)
+        try:
+            if database.ping():
+                return True
+        except Exception as error:  # noqa: BLE001 - defensive startup guard
+            last_error = error
+            log.warning(
+                "Database ping failed during startup, will retry",
+                attempt=attempt,
+                error=str(error),
+            )
+    if last_error is not None:
+        log.error("Database unreachable after startup retries", error=str(last_error))
+    return False
+
 
 def create_app(config: AppConfig | None = None) -> FastAPI:
     application_config = config or AppConfig.from_environment()
@@ -28,7 +59,7 @@ def create_app(config: AppConfig | None = None) -> FastAPI:
     async def lifespan(_: FastAPI):
         database = Database.from_config(application_config)
         try:
-            connected = database.ping()
+            connected = _ping_with_retry(database)
             log.info("LuxTime API starting", database_connected=connected)
         finally:
             database.close()
