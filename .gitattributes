@@ -1,0 +1,2 @@
+# LuxForge agent governance: the Claude guard hook must keep LF endings.
+.claude/hooks/*.sh text eol=lf
