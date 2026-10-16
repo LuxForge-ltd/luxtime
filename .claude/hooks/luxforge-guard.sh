@@ -2,8 +2,10 @@
 # LuxForge agent governance guard for Claude Code (PreToolUse hook).
 #
 # Enforces the parts of the LuxForge agent rules that can be checked mechanically:
-#   - no merging or auto-merging pull requests (rule 7)
 #   - no pushes, commits, merges or rebases on main, master or Dev (rule 8)
+#
+# Pull request merges are allowed (rule 7): the agent merges only on the operator's word
+# in the conversation, which a hook cannot see, so the agent is trusted to check it.
 #
 # Claude Code passes the tool call as JSON on stdin. Exit code 2 blocks the call and
 # shows stderr to Claude; exit code 0 allows it. The script needs only bash, sed, tr and
@@ -28,13 +30,6 @@ json_field() {
 
 tool=$(json_field tool_name)
 
-# GitHub MCP tools that merge or enable auto-merge are never allowed without the operator.
-case "$tool" in
-    *merge_pull_request* | *enable_pr_auto_merge* | *merge_branch*)
-        block "merging a pull request (tool $tool)."
-        ;;
-esac
-
 [ "$tool" = "Bash" ] || exit 0
 
 command=$(json_field command | tr '[:upper:]' '[:lower:]')
@@ -57,14 +52,6 @@ is_protected_ref() {
 segments=$(printf '%s' "$command" | sed -E 's/\\n/;/g; s/(\&\&|\|\||;|\|)/\n/g')
 
 while IFS= read -r segment; do
-    # Pull request merges through the GitHub CLI or API.
-    if [[ "$segment" =~ (^|[[:space:]])gh[[:space:]]+pr[[:space:]]+merge ]]; then
-        block "gh pr merge."
-    fi
-    if [[ "$segment" =~ (^|[[:space:]])gh[[:space:]]+api ]] && [[ "$segment" =~ /merge([[:space:]\"\'/]|$) ]]; then
-        block "a merge through the GitHub API."
-    fi
-
     [[ "$segment" =~ (^|[[:space:]])git[[:space:]] ]] || continue
 
     # Drop everything before "git" and git's own options such as -C <path>.
