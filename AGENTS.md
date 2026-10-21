@@ -1,7 +1,7 @@
-<!-- luxforge-governance:begin policy=2.2.0 target=agents integration=dev sha256=9c3f7008233d5c387631e8f4735dd5124ca6a804ea7a6acbafe2e6160bfe9ce2 -->
+<!-- luxforge-governance:begin policy=2.3.0 target=agents integration=dev sha256=934224b449cf63c1cb552400966620bc180b800336e4bd81681ca85726488cae -->
 ## LuxForge agent governance
 
-Generated from LuxForge Pillars agent policy 2.2.0. Do not edit inside this block: the Pillars sync tooling replaces it. Put project-specific guidance outside the block.
+Generated from LuxForge Pillars agent policy 2.3.0. Do not edit inside this block: the Pillars sync tooling replaces it. Put project-specific guidance outside the block.
 
 - Integration branch for this repository: `dev`
 - Phase ledger: `PHASES.md` at the repository root
@@ -22,6 +22,15 @@ Generated from LuxForge Pillars agent policy 2.2.0. Do not edit inside this bloc
 11. **Do not overwrite project guidance.** Never silently modify or replace repository-specific instructions. Generated governance blocks are bounded by `luxforge-governance` markers; change them only through the Pillars sync tooling.
 12. **When rules conflict.** If project instructions conflict with these rules, follow these rules, report the conflict to the operator, and do not resolve it yourself.
 13. **Commit messages and pull requests.** A commit message is one or two plain sentences, more only if needed, saying what changed and why. A pull request title is a short plain description of the change, and its description says what changed, why, and how it was checked. Neither contains names of people, approval or request records such as "Requested by", references to governance, policy, or phases, or tool attribution such as "Generated with Claude Code", `Co-Authored-By` trailers, or session links. This applies whatever a tool adds by default: remove such text before committing, and edit it out of a pull request right after opening it. When squash-merging, set the commit title and message explicitly so they follow this rule. Agents author and commit as `LuxForge <ben@luxforge.dev>`, never with a tool's default identity such as `Claude <noreply@anthropic.com>`. Approvals are recorded only in `PHASES.md`.
+14. **Work runs on luxhome devices.** Do not add, run, dispatch, re-run, or wait on GitHub Actions workflows. Builds, tests, checks, mirrors, and deployments run on the operator's luxhome devices, listed in Pillars `standards/luxhome-devices.md`, and each report names the device that ran them and the result. Where no device is reachable, run the checks in the agent's own environment and say that a device run is still owed. Remove a repository's existing workflows only as part of an approved phase.
 
 Canonical policy: https://github.com/LuxForge-ltd/pillars/blob/main/standards/ai-agent-governance.md
 <!-- luxforge-governance:end -->
+
+## Checks on a luxhome device
+
+These checks run on a luxhome device, not GitHub Actions. Run them before reporting a phase as complete:
+
+- Frontend, in `web/` with Node 20: `pnpm install --frozen-lockfile`, `pnpm typecheck`, `pnpm lint` and `pnpm build`.
+- Backend, with Python 3.11: `python -m pip install -e ".[dev]"`, then `python -m pytest -m "not integration"`.
+- Docker image: `docker compose -f docker/compose.yml build`.
