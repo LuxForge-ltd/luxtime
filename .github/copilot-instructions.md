@@ -1,7 +1,7 @@
-<!-- luxforge-governance:begin policy=2.1.0 target=copilot-repo integration=dev sha256=605c3166b82df1f4697783c47b50756b5a410a62cde0026d7ba020a511dc6757 -->
+<!-- luxforge-governance:begin policy=2.3.0 target=copilot-repo integration=dev sha256=934224b449cf63c1cb552400966620bc180b800336e4bd81681ca85726488cae -->
 ## LuxForge agent governance
 
-Generated from LuxForge Pillars agent policy 2.1.0. Do not edit inside this block: the Pillars sync tooling replaces it. Put project-specific guidance outside the block.
+Generated from LuxForge Pillars agent policy 2.3.0. Do not edit inside this block: the Pillars sync tooling replaces it. Put project-specific guidance outside the block.
 
 - Integration branch for this repository: `dev`
 - Phase ledger: `PHASES.md` at the repository root
@@ -21,7 +21,8 @@ Generated from LuxForge Pillars agent policy 2.1.0. Do not edit inside this bloc
 10. **Handoffs.** Keep `PHASES.md` at the repository root current: approved plan, phases and status, branch, version, pull request, and each approval (who, when, where). Read it before starting work and update it as part of each approved commit, so another agent can continue without losing approval context.
 11. **Do not overwrite project guidance.** Never silently modify or replace repository-specific instructions. Generated governance blocks are bounded by `luxforge-governance` markers; change them only through the Pillars sync tooling.
 12. **When rules conflict.** If project instructions conflict with these rules, follow these rules, report the conflict to the operator, and do not resolve it yourself.
-13. **Commit messages.** A commit message is one or two plain sentences, more only if needed, saying what changed and why. It contains no names of people, no approval records, no references to governance, policy, or phases, and no tool attribution such as "Generated with Claude Code", `Co-Authored-By` trailers, or session links. Approvals are recorded only in `PHASES.md`.
+13. **Commit messages and pull requests.** A commit message is one or two plain sentences, more only if needed, saying what changed and why. A pull request title is a short plain description of the change, and its description says what changed, why, and how it was checked. Neither contains names of people, approval or request records such as "Requested by", references to governance, policy, or phases, or tool attribution such as "Generated with Claude Code", `Co-Authored-By` trailers, or session links. This applies whatever a tool adds by default: remove such text before committing, and edit it out of a pull request right after opening it. When squash-merging, set the commit title and message explicitly so they follow this rule. Agents author and commit as `LuxForge <ben@luxforge.dev>`, never with a tool's default identity such as `Claude <noreply@anthropic.com>`. Approvals are recorded only in `PHASES.md`.
+14. **Work runs on luxhome devices.** Do not add, run, dispatch, re-run, or wait on GitHub Actions workflows. Builds, tests, checks, mirrors, and deployments run on the operator's luxhome devices, listed in Pillars `standards/luxhome-devices.md`, and each report names the device that ran them and the result. Where no device is reachable, run the checks in the agent's own environment and say that a device run is still owed. Remove a repository's existing workflows only as part of an approved phase.
 
 Canonical policy: https://github.com/LuxForge-ltd/pillars/blob/main/standards/ai-agent-governance.md
 <!-- luxforge-governance:end -->
