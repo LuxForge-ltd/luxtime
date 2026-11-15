@@ -17,6 +17,7 @@ _None recorded yet. Record each approved plan here: what was approved, by whom, 
 | 01 | `phase-01-sync-agent-governance` | PR open, awaiting operator merge | 0.0.2 | opened by Sync-RepoGovernance.ps1 | Operator ran the sync with -OpenPullRequest, 2026-10-15 19:12 UTC |
 | 02 | `phase-02-sync-agent-governance` | PR open, awaiting operator merge | 0.0.3 | opened by Sync-RepoGovernance.ps1 | Operator ran the sync with -OpenPullRequest, 2026-10-16 12:47 UTC |
 | 03 | `phase-03-sync-agent-governance` | PR open, awaiting operator merge | 0.0.4 | opened by Sync-RepoGovernance.ps1 | Operator ran the sync with -OpenPullRequest, 2026-10-18 21:01 UTC |
+| 04 | `phase-04-sync-agent-governance` | PR open, awaiting operator merge | 0.0.5 | opened by Sync-RepoGovernance.ps1 | Operator ran the sync with -OpenPullRequest, 2026-11-15 01:32 UTC |
 
 ## Handoff Notes
 
