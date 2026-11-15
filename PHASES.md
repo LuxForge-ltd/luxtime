@@ -14,11 +14,14 @@ _None recorded yet. Record each approved plan here: what was approved, by whom, 
 
 | Phase | Branch | Status | Version | Pull request | Commit approval |
 | --- | --- | --- | --- | --- | --- |
-| 01 | `phase-01-sync-agent-governance` | PR open, awaiting operator merge | 0.0.2 | opened by Sync-RepoGovernance.ps1 | Operator ran the sync with -OpenPullRequest, 2026-10-15 19:12 UTC |
-| 02 | `phase-02-sync-agent-governance` | PR open, awaiting operator merge | 0.0.3 | opened by Sync-RepoGovernance.ps1 | Operator ran the sync with -OpenPullRequest, 2026-10-16 12:47 UTC |
-| 03 | `phase-03-sync-agent-governance` | PR open, awaiting operator merge | 0.0.4 | opened by Sync-RepoGovernance.ps1 | Operator ran the sync with -OpenPullRequest, 2026-10-18 21:01 UTC |
-| 04 | `phase-04-sync-agent-governance` | PR open, awaiting operator merge | 0.0.5 | opened by Sync-RepoGovernance.ps1 | Operator ran the sync with -OpenPullRequest, 2026-11-15 01:32 UTC |
+| 01 | `phase-01-sync-agent-governance` | Merged | 0.0.2 | opened by Sync-RepoGovernance.ps1 | Operator ran the sync with -OpenPullRequest, 2026-10-15 19:12 UTC |
+| 02 | `phase-02-sync-agent-governance` | Merged | 0.0.3 | opened by Sync-RepoGovernance.ps1 | Operator ran the sync with -OpenPullRequest, 2026-10-16 12:47 UTC |
+| 03 | `phase-03-sync-agent-governance` | Merged | 0.0.4 | opened by Sync-RepoGovernance.ps1 | Operator ran the sync with -OpenPullRequest, 2026-10-18 21:01 UTC |
+| 04 | `phase-04-sync-agent-governance` | Merged | 0.0.5 | opened by Sync-RepoGovernance.ps1 | Operator ran the sync with -OpenPullRequest, 2026-11-15 01:32 UTC |
+| 05 | `phase-05-continue-main-version` | Merged | 0.1.1 | see pull requests | Ben, 2026-11-15 01:25 UTC, Pillars project thread "Finish all phases and deploy via Joyeuse" (overnight approval to build, merge and deploy) |
 
 ## Handoff Notes
 
 _Anything the next agent needs to continue safely._
+
+- `main` was already at 0.1.0 (matching `pyproject.toml`) while `dev` counted from 0.0.1, so `dev` now continues from `main` at 0.1.1. The next phase takes 0.1.2.
